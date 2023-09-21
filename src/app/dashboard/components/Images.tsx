@@ -5,9 +5,10 @@ import Image from "next/image";
 interface Images {
     src: any
     alt: string
+    onClick?: () => void
 }
 
-export default function Images({ src, alt }: Images) {
+export default function Images({ src, alt, onClick }: Images) {
     return (
         <Box
             sx={{
@@ -19,6 +20,7 @@ export default function Images({ src, alt }: Images) {
             }}
         >
             <Image
+                onClick={onClick}
                 width={300}
                 height={200}
                 src={src}

@@ -1,11 +1,14 @@
 'use client'
 
-import { Box, Checkbox, IconButton, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material"
+import { Box, Checkbox, IconButton, ListItemIcon, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useEffect } from "react";
 import { Tarefa } from "@/types/tarefa";
 import ModalVisuTarefas from "./ModalVisuTarefas";
+import EventIcon from '@mui/icons-material/Event';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import Calendario from "./Calendario";
 
 export default function Tarefas() {
     const [tarefas, setTarefas] = React.useState<Tarefa[]>([]);
@@ -15,6 +18,16 @@ export default function Tarefas() {
     const [tarefasSelecionadas, setTarefasSelecionadas] = React.useState<string[]>([]);
     const [todosSelecionados, setTodosSelecionados] = React.useState(false);
     const tarefasPorPagina = 7;
+
+    const [isCalendarioAtivo, setIsCalendarioAtivo] = React.useState(false);
+
+    const handleCalendarioClick = () => {
+      setIsCalendarioAtivo(true);
+    };
+  
+    const handleListaDeTarefasClick = () => {
+      setIsCalendarioAtivo(false);
+    };
 
     const openModal = (tarefa: Tarefa): void => {
         setTarefaSelecionada(tarefa);
@@ -194,52 +207,72 @@ export default function Tarefas() {
             >
                 <TableContainer>
                     <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>
-                                <Checkbox checked={todosSelecionados} onChange={toggleTodosSelecionados} />
-                            </TableCell>
-                            <TableCell>
-                                <TableSortLabel>NOME</TableSortLabel>
-                            </TableCell>
-                            <TableCell>
-                                <TableSortLabel>ATIVIDADE</TableSortLabel>
-                            </TableCell>
-                            <TableCell>
-                                <TableSortLabel>PRAZO INICIAL</TableSortLabel>
-                            </TableCell>
-                            <TableCell>
-                                <TableSortLabel>PRAZO FINAL</TableSortLabel>
-                            </TableCell>
-                            <TableCell>
-                                <FilterAltIcon />
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {renderTarefas()}
-                    </TableBody>
-                    </Table>
-                    {totalTarefasUsuarioLogado >= tarefasPorPagina && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                        <Pagination
-                            count={Math.ceil(totalTarefasUsuarioLogado / tarefasPorPagina)}
-                            page={paginaAtual}
-                            onChange={handlePageChange}
-                        />
-                    </Box>
-                    )}
-                    {tarefasSelecionadas.length > 0 && (
-                        <IconButton
-                            sx={{ mr: 1, ml: 2 }}
-                            onClick={() => handleExcluirTarefas(tarefasSelecionadas)}
-                            aria-label="Excluir tarefas selecionadas"
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    )}
+                        {!isCalendarioAtivo && (
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>
+                                    <Checkbox checked={todosSelecionados} onChange={toggleTodosSelecionados} />
+                                    </TableCell>
+                                    <TableCell>
+                                    <TableSortLabel>NOME</TableSortLabel>
+                                    </TableCell>
+                                    <TableCell>
+                                    <TableSortLabel>ATIVIDADE</TableSortLabel>
+                                    </TableCell>
+                                    <TableCell>
+                                    <TableSortLabel>PRAZO INICIAL</TableSortLabel>
+                                    </TableCell>
+                                    <TableCell>
+                                    <TableSortLabel>PRAZO FINAL</TableSortLabel>
+                                    </TableCell>
+                                    <TableCell>
+                                    <FilterAltIcon />
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                        )}
+                        <TableBody>
+                            {isCalendarioAtivo ? <Calendario /> : renderTarefas() }
+                        </TableBody>
+                        </Table>
+                        {!isCalendarioAtivo && (
+                            <>
+                                {totalTarefasUsuarioLogado >= tarefasPorPagina && (
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                                    <Pagination
+                                        count={Math.ceil(totalTarefasUsuarioLogado / tarefasPorPagina)}
+                                        page={paginaAtual}
+                                        onChange={handlePageChange}
+                                    />
+                                    </Box>
+                                )}
+                                {tarefasSelecionadas.length > 0 && (
+                                    <IconButton
+                                    sx={{ mr: 1, ml: 2 }}
+                                    onClick={() => handleExcluirTarefas(tarefasSelecionadas)}
+                                    aria-label="Excluir tarefas selecionadas"
+                                    >
+                                    <DeleteIcon />
+                                    </IconButton>
+                                )}
+                            </>
+                        )}
+                            <IconButton
+                                style={{ float: 'right' }}
+                                aria-label="Calendário"
+                                onClick={handleCalendarioClick}
+                            >
+                                <EventIcon />
+                            </IconButton>
+                            <IconButton
+                                style={{ float: 'right' }}
+                                aria-label="Calendário"
+                                onClick={handleListaDeTarefasClick}
+                            >
+                                <PlaylistAddCheckIcon />
+                            </IconButton>
                 </TableContainer>
             </Box>
-        </>
+         </>
     )
 }

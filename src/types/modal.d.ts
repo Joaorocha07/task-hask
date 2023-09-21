@@ -6,5 +6,5 @@ interface IModalTarefasProps {
 interface IModalVisuTarefasProps {
     isOpen: boolean
     onClose: () => void
-    tarefaSelecionada: Tarefa | null;
+    tarefaSelecionada: Tarefa | null
 }

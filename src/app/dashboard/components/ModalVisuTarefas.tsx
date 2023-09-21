@@ -7,7 +7,7 @@ import {
     IconButton, 
     Modal, 
     TextField, 
-    Typography 
+    Typography,
     } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React, { useEffect } from "react";
@@ -196,18 +196,23 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
 
                         <form action="">
                             <Box sx={{ marginBottom: '16px' }}>
-                                <TextField 
+                                <TextField
                                     disabled={!modoEdicao}
                                     variant="outlined"
                                     label="Nome da tarefa"
                                     name="Nome da tarefa"
                                     type="text"
                                     value={titulo}
-                                    onChange={(e) => setTitulo(e.target.value)}
+                                    onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setTitulo(e.target.value)}
                                     onBlur={() => {}}
                                     fullWidth
                                     sx={{
-                                        marginBottom: '1rem'
+                                        marginBottom: '1rem',
+                                        '&.Mui-disabled': {
+                                            // Estilize o TextField quando ele estiver desabilitado aqui
+                                            backgroundColor: 'black', // Defina a cor de fundo desejada
+                                            color: 'white', // Defina a cor do texto desejada
+                                        },
                                     }}
                                 />
 
@@ -221,7 +226,8 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                                     value={conteudo}
                                     onChange={(e) => setConteudo(e.target.value)}
                                     sx={{
-                                        marginBottom: '1rem'
+                                        marginBottom: '1rem',
+                                        color: 'black'
                                     }}
                                 />
 
@@ -242,11 +248,11 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                                         },
                                     }}
                                     sx={{
-                                        marginBottom: '1rem'
+                                        marginBottom: '1rem',
                                     }}
                                 />
                                 
-                                <TextField 
+                                <TextField
                                     disabled={!modoEdicao}
                                     label="Prazo Final"
                                     name="Prazo final"
