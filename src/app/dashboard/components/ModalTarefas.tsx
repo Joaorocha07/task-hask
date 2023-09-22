@@ -5,8 +5,12 @@ import {
     Box, 
     Button, 
     CircularProgress, 
+    FormControl, 
     IconButton, 
+    InputLabel, 
+    MenuItem, 
     Modal, 
+    Select, 
     TextField, 
     Typography 
 } from "@mui/material";
@@ -20,6 +24,7 @@ export default function ModalTarefas({ isOpen, onClose }: IModalTarefasProps) {
     const [conteudo, setConteudo] = React.useState('');
     const [prazoInicial, setPrazoInicial] = React.useState('');
     const [prazoFinal, setPrazoFinal] = React.useState('');
+    const [categoria, setCategoria] = React.useState("A fazer");
     const [cor, setCor] = React.useState('');
 
     const [tarefasContador, setTarefasContador] = React.useState<number>(0);
@@ -49,6 +54,7 @@ export default function ModalTarefas({ isOpen, onClose }: IModalTarefasProps) {
                 prazoInicial,
                 prazoFinal,
                 cor,
+                categoria,
                 userId: userId,
             };
 
@@ -227,6 +233,18 @@ export default function ModalTarefas({ isOpen, onClose }: IModalTarefasProps) {
                                     margin="normal"
                                 />
 
+                                <FormControl fullWidth sx={{ mt: 1.5 }}>
+                                    <InputLabel>Categoria</InputLabel>
+                                    <Select
+                                        value={categoria}
+                                        onChange={(e) => setCategoria(e.target.value)}
+                                    >
+                                        <MenuItem value="A fazer">A fazer</MenuItem>
+                                        <MenuItem value="Fazendo">Fazendo</MenuItem>
+                                        <MenuItem value="Feito">Feito</MenuItem>
+                                    </Select>
+                                </FormControl>
+
                                 <Button
                                     fullWidth
                                     variant="contained"
@@ -237,9 +255,8 @@ export default function ModalTarefas({ isOpen, onClose }: IModalTarefasProps) {
                                         marginTop: '1rem'
                                     }}
                                 >
-                                    {isLoading ? <CircularProgress size={24} /> : 'Cadastra Tarefa'}
+                                    {isLoading ? <CircularProgress size={24} /> : 'Cadastrar Tarefa'}
                                 </Button>
-
                             </Box>
                         </form>
 

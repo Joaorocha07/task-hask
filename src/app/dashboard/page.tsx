@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Titulo from "./components/Titulo";
 import { Box } from "@mui/material";
-// import imageFundo from './../../../public/images/img7.png';
+import imageFundo from './../../../public/images/img5.png';
 import Tarefas from "./components/Tarefas";
 import { isAuthenticated } from "@/lib/auth";
 
@@ -35,7 +35,7 @@ export default function Dashboard() {
                 width="100vw"
                 height="100vh"
                 sx={{
-                    backgroundImage: `url(${selectedImage.src})`,
+                    backgroundImage: `url(${imageFundo.src})`,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'

@@ -6,4 +6,5 @@ export interface Tarefa {
     prazoFinal: string; 
     cor: string;
     userId: string;
+    categoria: string;
 }

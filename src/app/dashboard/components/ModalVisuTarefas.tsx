@@ -4,8 +4,12 @@ import {
     Box, 
     Button, 
     CircularProgress, 
+    FormControl, 
     IconButton, 
+    InputLabel, 
+    MenuItem, 
     Modal, 
+    Select, 
     TextField, 
     Typography,
     } from "@mui/material";
@@ -24,6 +28,7 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
     const [prazoInicial, setPrazoInicial] = React.useState('');
     const [prazoFinal, setPrazoFinal] = React.useState('');
     const [cor, setCor] = React.useState('');
+    const [categoria, setCategoria] = React.useState('');
 
     useEffect(() => {
         if (tarefaSelecionada) {
@@ -33,12 +38,14 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                 setPrazoInicial(prazoInicial);
                 setPrazoFinal(prazoFinal);
                 setCor(cor);
+                setCategoria(categoria);
             } else {
                 setTitulo(tarefaSelecionada.titulo);
                 setConteudo(tarefaSelecionada.conteudo);
                 setPrazoInicial(tarefaSelecionada.prazoInicial);
                 setPrazoFinal(tarefaSelecionada.prazoFinal);
                 setCor(tarefaSelecionada.cor);
+                setCategoria(tarefaSelecionada.categoria);
             }
         }
     }, [conteudo, cor, modoEdicao, prazoFinal, prazoInicial, titulo, tarefaSelecionada]);
@@ -208,11 +215,7 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                                     fullWidth
                                     sx={{
                                         marginBottom: '1rem',
-                                        '&.Mui-disabled': {
-                                            // Estilize o TextField quando ele estiver desabilitado aqui
-                                            backgroundColor: 'black', // Defina a cor de fundo desejada
-                                            color: 'white', // Defina a cor do texto desejada
-                                        },
+                                        color: 'black'
                                     }}
                                 />
 
@@ -274,6 +277,19 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                                     fullWidth
                                     margin="normal"
                                 />
+
+                                <FormControl fullWidth sx={{ mt: 1.5, mb: 2 }}>
+                                    <InputLabel>Categoria</InputLabel>
+                                    <Select
+                                        disabled={!modoEdicao}
+                                        value={categoria}
+                                        onChange={(e) => setCategoria(e.target.value)}
+                                    >
+                                        <MenuItem value="A fazer">A fazer</MenuItem>
+                                        <MenuItem value="Fazendo">Fazendo</MenuItem>
+                                        <MenuItem value="Feito">Feito</MenuItem>
+                                    </Select>
+                                </FormControl>
 
                                 {modoEdicao ? (
                                     <Button

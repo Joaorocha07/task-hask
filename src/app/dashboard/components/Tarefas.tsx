@@ -8,6 +8,7 @@ import { Tarefa } from "@/types/tarefa";
 import ModalVisuTarefas from "./ModalVisuTarefas";
 import EventIcon from '@mui/icons-material/Event';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import Calendario from "./Calendario";
 
 export default function Tarefas() {
@@ -211,22 +212,22 @@ export default function Tarefas() {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>
-                                    <Checkbox checked={todosSelecionados} onChange={toggleTodosSelecionados} />
+                                        <Checkbox checked={todosSelecionados} onChange={toggleTodosSelecionados} />
                                     </TableCell>
                                     <TableCell>
-                                    <TableSortLabel>NOME</TableSortLabel>
+                                        <TableSortLabel>NOME</TableSortLabel>
                                     </TableCell>
                                     <TableCell>
-                                    <TableSortLabel>ATIVIDADE</TableSortLabel>
+                                        <TableSortLabel>ATIVIDADE</TableSortLabel>
                                     </TableCell>
                                     <TableCell>
-                                    <TableSortLabel>PRAZO INICIAL</TableSortLabel>
+                                        <TableSortLabel>PRAZO INICIAL</TableSortLabel>
                                     </TableCell>
                                     <TableCell>
-                                    <TableSortLabel>PRAZO FINAL</TableSortLabel>
+                                        <TableSortLabel>PRAZO FINAL</TableSortLabel>
                                     </TableCell>
                                     <TableCell>
-                                    <FilterAltIcon />
+                                        <FilterAltIcon />
                                     </TableCell>
                                 </TableRow>
                             </TableHead>
@@ -262,7 +263,7 @@ export default function Tarefas() {
                                 aria-label="Calendário"
                                 onClick={handleCalendarioClick}
                             >
-                                <EventIcon />
+                                <ViewKanbanIcon />
                             </IconButton>
                             <IconButton
                                 style={{ float: 'right' }}

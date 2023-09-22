@@ -4,6 +4,8 @@ import AssistantPhotoIcon from '@mui/icons-material/AssistantPhoto';
 import { deepOrange } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import MenuHeader from "./MenuHeader";
+import logo from '../../../../public/logo.png';
+import Image from "next/image";
 
 export default function Header() {
     const [userData, setUserData] = useState<{ nome: string; email: string } | null>(null);
@@ -45,10 +47,23 @@ export default function Header() {
                     height: "10vh",
                     background: "#FFF",
                     boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                    padding: "0 20px",
+                    // padding: "0 20px",
+                    paddingLeft: "20px"
                 }}
                 >
                 <MenuHeader />
+                <Box
+                    sx={{
+                        mr: '10vh',
+                    }}
+                >
+                    <Image
+                        width={110}
+                        height={105}
+                        src={logo}
+                        alt='logo-task'
+                    />
+                </Box>
                 <Box
                     sx={{
                         display: "flex",
