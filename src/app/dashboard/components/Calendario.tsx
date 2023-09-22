@@ -23,18 +23,16 @@ export default function Kanban() {
         return () => clearInterval(intervalId)
     }, [])
 
-    const onDragEnd = (result) => {
+    const onDragEnd = ({ result }: any) => {
         if (!result.destination) {
-          return; // O item foi arrastado para fora da área de destino
+          return;
         }
     
-        // Lógica para atualizar o estado das tarefas após o arrastar e soltar
         const updatedTarefas = [...tarefas];
         const [reorderedItem] = updatedTarefas.splice(result.source.index, 1);
         updatedTarefas.splice(result.destination.index, 0, reorderedItem);
         setTarefas(updatedTarefas);
-    
-        // Atualize o Local Storage para refletir as mudanças nas tarefas
+
         localStorage.setItem("tarefas", JSON.stringify(updatedTarefas));
     };
 
@@ -47,100 +45,100 @@ export default function Kanban() {
             <DragDropContext onDragEnd={onDragEnd}>
                 <Grid container spacing={2}>
                     <Grid item xs={4}>
-                    <Paper elevation={3}>
-                        <Box p={2}>
-                        <Typography variant="h6">A fazer</Typography>
-                        <Droppable droppableId="a-fazer">
-                            {(provided) => (
-                            <div ref={provided.innerRef} {...provided.droppableProps}>
-                                {/* Renderize as tarefas "A fazer" aqui */}
-                                {tarefasAFazer.map((tarefa, index) => (
-                                <Draggable
-                                    key={tarefa.id}
-                                    draggableId={tarefa.id}
-                                    index={index}
-                                >
+                        <Paper elevation={3}>
+                            <Box p={2}>
+                                <Typography variant="h6">A fazer</Typography>
+                                <Droppable droppableId="a-fazer">
                                     {(provided) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                    >
-                                        {tarefa.titulo}
-                                    </div>
+                                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                                            {/* Renderize as tarefas "A fazer" aqui */}
+                                            {tarefasAFazer.map((tarefa, index) => (
+                                            <Draggable
+                                                key={tarefa.id}
+                                                draggableId={tarefa.id}
+                                                index={index}
+                                            >
+                                                {(provided) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    {tarefa.titulo}
+                                                </div>
+                                                )}
+                                            </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                        </div>
                                     )}
-                                </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                            )}
-                        </Droppable>
-                        </Box>
-                    </Paper>
+                                </Droppable>
+                            </Box>
+                        </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                    <Paper elevation={3}>
-                        <Box p={2}>
-                        <Typography variant="h6">Fazendo</Typography>
-                        <Droppable droppableId="fazendo">
-                            {(provided) => (
-                            <div ref={provided.innerRef} {...provided.droppableProps}>
-                                {/* Renderize as tarefas "Fazendo" aqui */}
-                                {tarefasFazendo.map((tarefa, index) => (
-                                <Draggable
-                                    key={tarefa.id}
-                                    draggableId={tarefa.id}
-                                    index={index}
-                                >
+                        <Paper elevation={3}>
+                            <Box p={2}>
+                                <Typography variant="h6">Fazendo</Typography>
+                                <Droppable droppableId="fazendo">
                                     {(provided) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                    >
-                                        {tarefa.titulo}
-                                    </div>
+                                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                                            {/* Renderize as tarefas "Fazendo" aqui */}
+                                            {tarefasFazendo.map((tarefa, index) => (
+                                            <Draggable
+                                                key={tarefa.id}
+                                                draggableId={tarefa.id}
+                                                index={index}
+                                            >
+                                                {(provided) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    {tarefa.titulo}
+                                                </div>
+                                                )}
+                                            </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                        </div>
                                     )}
-                                </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                            )}
-                        </Droppable>
-                        </Box>
-                    </Paper>
+                                </Droppable>
+                            </Box>
+                        </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                    <Paper elevation={3}>
-                        <Box p={2}>
-                        <Typography variant="h6">Feito</Typography>
-                        <Droppable droppableId="feito">
-                            {(provided) => (
-                            <div ref={provided.innerRef} {...provided.droppableProps}>
-                                {/* Renderize as tarefas "Feito" aqui */}
-                                {tarefasFeito.map((tarefa, index) => (
-                                <Draggable
-                                    key={tarefa.id}
-                                    draggableId={tarefa.id}
-                                    index={index}
-                                >
+                        <Paper elevation={3}>
+                            <Box p={2}>
+                                <Typography variant="h6">Feito</Typography>
+                                <Droppable droppableId="feito">
                                     {(provided) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                    >
-                                        {tarefa.titulo}
-                                    </div>
+                                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                                            {/* Renderize as tarefas "Feito" aqui */}
+                                            {tarefasFeito.map((tarefa, index) => (
+                                            <Draggable
+                                                key={tarefa.id}
+                                                draggableId={tarefa.id}
+                                                index={index}
+                                            >
+                                                {(provided) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    {tarefa.titulo}
+                                                </div>
+                                                )}
+                                            </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                        </div>
                                     )}
-                                </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </div>
-                            )}
-                        </Droppable>
-                        </Box>
-                    </Paper>
+                                </Droppable>
+                            </Box>
+                        </Paper>
                     </Grid>
                 </Grid>
             </DragDropContext>

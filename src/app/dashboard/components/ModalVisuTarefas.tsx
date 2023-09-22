@@ -52,7 +52,7 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
 
     const handleSalvarClick = () => {
         setModoEdicao(false); 
-        if (!titulo && !conteudo && !prazoInicial && !prazoFinal && !cor) {
+        if (!titulo || !conteudo || !prazoInicial || !prazoFinal || !cor) {
             exibirMensagem('Nenhuma alteração foi feita.', 'info');
             return;
         }
@@ -74,6 +74,7 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
                 conteudo: conteudo || tarefaSelecionada.conteudo,
                 prazoInicial: prazoInicial || tarefaSelecionada.prazoInicial,
                 prazoFinal: prazoFinal || tarefaSelecionada.prazoFinal,
+                categoria: categoria || tarefaSelecionada.categoria,
                 cor: cor || tarefaSelecionada.cor
             };
 
