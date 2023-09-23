@@ -52,10 +52,10 @@ export default function ModalVisuTarefas({ isOpen, onClose, tarefaSelecionada }:
 
     const handleSalvarClick = () => {
         setModoEdicao(false); 
-        if (!titulo || !conteudo || !prazoInicial || !prazoFinal || !cor) {
-            exibirMensagem('Nenhuma alteração foi feita.', 'info');
-            return;
-        }
+        // if (!titulo || !conteudo || !prazoInicial || !prazoFinal || !cor) {
+        //     exibirMensagem('Nenhuma alteração foi feita.', 'info');
+        //     return;
+        // }
 
         setLoading(true);
 
