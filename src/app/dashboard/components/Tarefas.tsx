@@ -1,12 +1,23 @@
 'use client'
 
-import { Box, Checkbox, IconButton, ListItemIcon, Pagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from "@mui/material"
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { 
+    Box,
+    Checkbox,
+    IconButton, 
+    Pagination, 
+    Table, 
+    TableBody, 
+    TableCell, 
+    TableContainer, 
+    TableHead, 
+    TableRow, 
+    TableSortLabel 
+} from "@mui/material"
 import React, { useEffect } from "react";
 import { Tarefa } from "@/types/tarefa";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
 import ModalVisuTarefas from "./ModalVisuTarefas";
-import EventIcon from '@mui/icons-material/Event';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
 import Calendario from "./Calendario";
@@ -29,11 +40,6 @@ export default function Tarefas() {
     const handleListaDeTarefasClick = () => {
       setIsCalendarioAtivo(false);
     };
-
-    const openModal = (tarefa: Tarefa): void => {
-        setTarefaSelecionada(tarefa);
-        setIsModalOpen(true)
-    }
     
     const closeModal = (): void => {
         setTarefaSelecionada(null);

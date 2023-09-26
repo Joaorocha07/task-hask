@@ -2,21 +2,17 @@ import { useEffect, useState } from "react"
 import { Tarefa } from "@/types/tarefa"
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 import { Box, Grid, Paper, Typography } from "@mui/material"
-import TarefasColumn from "./TarefasColunas"
 
 export default function Kanban() {
     const [tarefas, setTarefas] = useState<Tarefa[]>([])
-    // const [tarefasAFazer, setTarefasAFazer] = useState<Tarefa[]>([])
-    // const [tarefasFazendo, setTarefasFazendo] = useState<Tarefa[]>([])
-    // const [tarefasFeito, setTarefasFeito] = useState<Tarefa[]>([])
-    const usuarioLogadoString = localStorage.getItem('usuarioLogado')
-    const usuarioLogado = usuarioLogadoString ? JSON.parse(usuarioLogadoString) : null
+    const usuarioLogadoString = localStorage.getItem('usuarioLogado');
+    const usuarioLogado = JSON.parse(usuarioLogadoString ?? '');
 
     useEffect(() => {
         const storedTarefas = localStorage.getItem('tarefas')
         if (storedTarefas) {
           setTarefas(JSON.parse(storedTarefas))
-          console.log(tarefas)
+          console.log(storedTarefas)
         }
     
         const intervalId = setInterval(() => {
@@ -29,81 +25,179 @@ export default function Kanban() {
         return () => clearInterval(intervalId)
     }, [])
 
-    // const onDragEnd = (result: any) => {
-    //     if (!result || !result.destination) {
-    //       return;
-    //     }
-      
-    //     const userId = usuarioLogado ? usuarioLogado.id : null;
-      
-    //     if (userId !== null) {
-    //       const updatedTarefas = [...tarefas];
-    //       const [reorderedItem] = updatedTarefas.splice(result.source.index, 1);
-    //       const movedTarefa = { ...reorderedItem, categoria: result.destination.droppableId }; // Atualize a categoria
-    //       updatedTarefas.splice(result.destination.index, 0, movedTarefa);
-      
-    //       // Atualize o estado geral de tarefas
-    //       setTarefas(updatedTarefas);
-      
-    //       // Atualize os estados intermediários com base na nova ordem
-    //       const tarefasAFazerAtualizadas = updatedTarefas.filter((tarefa) =>
-    //         tarefa.userId === userId && tarefa.categoria === "A fazer"
-    //       );
-    //       const tarefasFazendoAtualizadas = updatedTarefas.filter((tarefa) =>
-    //         tarefa.userId === userId && tarefa.categoria === "Fazendo"
-    //       );
-    //       const tarefasFeitoAtualizadas = updatedTarefas.filter((tarefa) =>
-    //         tarefa.userId === userId && tarefa.categoria === "Feito"
-    //       );
-      
-    //       setTarefasAFazer(tarefasAFazerAtualizadas);
-    //       setTarefasFazendo(tarefasFazendoAtualizadas);
-    //       setTarefasFeito(tarefasFeitoAtualizadas);
-      
-    //       // Atualize o armazenamento local
-    //       localStorage.setItem("tarefas", JSON.stringify(updatedTarefas));
-    //     }
-    //   };
+    const onDragEnd = ({ result }: any) => {
+      if (!result || !result.destination) {
+        return;
+      }
     
-    const onDragEnd = (result: any) => {
-        if (!result || !result.destination) {
-            return;
-        }
+      const usuarioLogadoString = localStorage.getItem('usuarioLogado');
     
-        const userId = usuarioLogado ? usuarioLogado.id : null;
+      if (usuarioLogadoString !== null) {
+        const usuarioLogado = JSON.parse(usuarioLogadoString);
     
-        if (userId !== null) {
-            const updatedTarefas = [...tarefas];
-            const [reorderedItem] = updatedTarefas.splice(result.source.index, 1);
-            const movedTarefa = { ...reorderedItem, categoria: result.destination.droppableId }; // Atualize a categoria
-            updatedTarefas.splice(result.destination.index, 0, movedTarefa);
-            setTarefas(updatedTarefas);
-    
-            console.log(updatedTarefas)
-    
-            const tarefasDoUsuario = updatedTarefas.filter((tarefa) => tarefa.userId === userId);
-            localStorage.setItem("tarefas", JSON.stringify(tarefasDoUsuario));
-        }
-    }
-    
+        const tarefasDoUsuario = tarefas.filter((tarefa) => tarefa.userId === usuarioLogado.id);
+        const [reorderedItem] = tarefasDoUsuario.splice(result.source.index, 1);
+        
+        // Atualize a categoria da tarefa para a nova coluna
+        reorderedItem.categoria = result.destination.droppableId;
 
-    const tarefasAFazer = 
-        usuarioLogado ? tarefas.filter
-        ((tarefa) => tarefa.userId === usuarioLogado.id && tarefa.categoria === "A fazer") : [];
-    const tarefasFazendo = 
-        usuarioLogado ? tarefas.filter
-        ((tarefa) => tarefa.userId === usuarioLogado.id && tarefa.categoria === "Fazendo") : [];
-    const tarefasFeito = 
-        usuarioLogado ? tarefas.filter
-        ((tarefa) => tarefa.userId === usuarioLogado.id && tarefa.categoria === "Feito") : [];
+        console.log(reorderedItem)
+    
+        tarefasDoUsuario.splice(result.destination.index, 0, reorderedItem);
+        setTarefas(tarefasDoUsuario);
+    
+        // Atualize o localStorage com as tarefas atualizadas
+        localStorage.setItem("tarefas", JSON.stringify(tarefas));
+      }
+    };       
+
+    const tarefasDoUsuario = tarefas.filter((tarefa) => tarefa.userId === usuarioLogado.id);
            
     return (
         <>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Grid container spacing={2}>
-                    <TarefasColumn titulo="A fazer" tarefas={tarefasAFazer} droppableId="a-fazer" />
-                    <TarefasColumn titulo="Fazendo" tarefas={tarefasFazendo} droppableId="fazendo" />
-                    <TarefasColumn titulo="Feito" tarefas={tarefasFeito} droppableId="feito" />
+                  <Grid item xs={4}>
+                    <Paper elevation={3}>
+                      <Box p={2}>
+                        <Typography variant="h6">A fazer</Typography>
+                        <Droppable droppableId="A fazer">
+                          {(provided) => (
+                            <div ref={provided.innerRef} {...provided.droppableProps}>
+                              {tarefasDoUsuario.filter((tarefa) => tarefa.categoria === "A fazer")
+                                .map((tarefa: Tarefa, index: number) => (
+                                  <Draggable key={tarefa.id} draggableId={tarefa.id} index={index}>
+                                    {(provided) => (
+                                      <Paper
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        elevation={3}
+                                        sx={{
+                                          display: 'flex',
+                                          flexDirection: 'column',
+                                          alignItems: 'center',
+                                          padding: '8px',
+                                          marginBottom: '15px',
+                                          backgroundColor: 'white',
+                                          borderRadius: '4px',
+                                          border: `2px solid ${tarefa.cor}`,
+                                        }}
+                                      >
+                                        <Typography>{tarefa.titulo}</Typography>
+                                        <Box
+                                          sx={{
+                                            backgroundColor: tarefa.cor,
+                                            width: '100%',
+                                            height: '8px',
+                                            borderRadius: '8px 8px 8px 8px',
+                                          }}
+                                        />
+                                      </Paper>
+                                    )}
+                                  </Draggable>
+                                ))}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Paper elevation={3}>
+                      <Box p={2}>
+                        <Typography variant="h6">Fazendo</Typography>
+                        <Droppable droppableId="Fazendo">
+                          {(provided) => (
+                            <div ref={provided.innerRef} {...provided.droppableProps}>
+                              {tarefasDoUsuario.filter((tarefa) => tarefa.categoria === "Fazendo")
+                                .map((tarefa: Tarefa, index: number) => (
+                                <Draggable key={tarefa.id} draggableId={tarefa.id} index={index}>
+                                  {(provided) => (
+                                    <Paper
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      elevation={3}
+                                      sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        padding: '8px',
+                                        marginBottom: '15px',
+                                        backgroundColor: 'white',
+                                        borderRadius: '4px',
+                                        border: `2px solid ${tarefa.cor}`,
+                                      }}
+                                    >
+                                      <Typography>{tarefa.titulo}</Typography>
+                                      <Box
+                                        sx={{
+                                          backgroundColor: tarefa.cor,
+                                          width: '100%',
+                                          height: '8px',
+                                          borderRadius: '8px 8px 8px 8px',
+                                        }}
+                                      />
+                                    </Paper>
+                                  )}
+                                </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Paper elevation={3}>
+                      <Box p={2}>
+                        <Typography variant="h6">Feito</Typography>
+                        <Droppable droppableId="Feito">
+                          {(provided) => (
+                            <div ref={provided.innerRef} {...provided.droppableProps}>
+                              {tarefasDoUsuario.filter((tarefa) => tarefa.categoria === "Feito")
+                                .map((tarefa: Tarefa, index: number) => (
+                                  <Draggable key={tarefa.id} draggableId={tarefa.id} index={index}>
+                                    {(provided) => (
+                                      <Paper
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        elevation={3}
+                                        sx={{
+                                          display: 'flex',
+                                          flexDirection: 'column',
+                                          alignItems: 'center',
+                                          padding: '8px',
+                                          marginBottom: '15px',
+                                          backgroundColor: 'white',
+                                          borderRadius: '4px',
+                                          border: `2px solid ${tarefa.cor}`,
+                                        }}
+                                      >
+                                        <Typography>{tarefa.titulo}</Typography>
+                                        <Box
+                                          sx={{
+                                            backgroundColor: tarefa.cor,
+                                            width: '100%',
+                                            height: '8px',
+                                            borderRadius: '8px 8px 8px 8px',
+                                          }}
+                                        />
+                                      </Paper>
+                                    )}
+                                  </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </Box>
+                    </Paper>
+                  </Grid>
                 </Grid>
             </DragDropContext>
         </>

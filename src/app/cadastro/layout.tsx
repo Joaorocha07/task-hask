@@ -1,8 +1,9 @@
 import { Box, Paper } from '@mui/material'
 import type { Metadata } from 'next'
-
+import Image from 'next/image'
 import styles from '../../styles/login.module.css'
 import imageCadastro from './../../../public/img-task.jpg';
+import imgLogo from '../../../public/logo.png'
 
 export const metadata: Metadata = {
   title: 'Página principal',
@@ -51,6 +52,19 @@ export default function CadastroLayout({
               alignItems: 'center'
             }}
           >
+            <Box
+               component="header"
+               sx={{
+                 margin: '30px auto 40px auto'
+               }}
+            >
+              <Image
+                src={imgLogo}
+                width={130}
+                height={130}
+                alt="Logotipo"
+              />
+            </Box>
             {children}
             <Box
               component="footer"

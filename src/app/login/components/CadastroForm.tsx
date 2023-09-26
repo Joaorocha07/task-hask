@@ -4,6 +4,7 @@ import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, TextF
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import styles from '../../../styles/login.module.css';
 
 function CadastroForm() {
     const [nome, setNome] = useState('');
@@ -115,6 +116,11 @@ function CadastroForm() {
                         type="text"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCadastro();
+                            }
+                        }}
                         fullWidth
                         sx={{
                             marginTop: '1rem'
@@ -127,6 +133,11 @@ function CadastroForm() {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCadastro();
+                            }
+                        }}
                         fullWidth
                         sx={{
                             marginTop: '1rem'
@@ -139,6 +150,11 @@ function CadastroForm() {
                         type={mostrarSenha ? 'text' : 'password'}
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCadastro();
+                            }
+                        }}
                         fullWidth
                         inputProps={{
                             'data-ignored': 'true'
@@ -167,6 +183,11 @@ function CadastroForm() {
                         type={mostrarConfirmeSenha ? 'text' : 'password'}
                         value={confirmeSenha}
                         onChange={(e) => setConfirmeSenha(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCadastro();
+                            }
+                        }}
                         fullWidth
                         inputProps={{
                             'data-ignored': 'true'
@@ -201,7 +222,18 @@ function CadastroForm() {
                     {isLoading ? <CircularProgress size={24} /> : 'Cadastrar'}
                     </Button>
                     <Box sx={{ marginTop: '1rem' }}>
-                        <Link href="/login">Já tem conta?</Link>
+                        <Typography
+                            textAlign="center"
+                            variant="body1"
+                            margin="auto 0"
+                            className={styles.firstAccess}
+                        >
+                            <Link
+                                href="/login"
+                            >
+                                Crie sua conta aqui
+                            </Link>
+                        </Typography>
                     </Box>
                 </Box>
             </Box>

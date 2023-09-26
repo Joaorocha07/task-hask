@@ -1,11 +1,11 @@
 'use client'
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Alert, Avatar, Box, Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import { deepOrange } from "@mui/material/colors";
-import { signOut, signIn, useSession } from 'next-auth/react'
+import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { useSession } from 'next-auth/react'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import styles from '../../../styles/login.module.css';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
@@ -114,6 +114,11 @@ function LoginForm() {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleLogin();
+                            }
+                        }}
                         fullWidth
                         sx={{
                             marginTop: '1rem'
@@ -126,6 +131,11 @@ function LoginForm() {
                         type={mostrarSenha ? 'text' : 'password'}
                         value={senha}
                         onChange={(e) => setSenha(e.target.value)}
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                handleLogin();
+                            }
+                        }}
                         fullWidth
                         inputProps={{
                             'data-ignored': 'true'
@@ -157,21 +167,21 @@ function LoginForm() {
                             marginTop: '1rem'
                         }}
                     >
-                    {isLoading ? <CircularProgress size={24} /> : 'Entrar'}
+                        {isLoading ? <CircularProgress size={24} /> : 'Entrar'}
                     </Button>
-                    {/* <Button 
-                        fullWidth
-                        variant="contained"
-                        color="primary" 
-                        onClick={()=>signIn("google")}
-                        sx={{
-                            marginTop: '1rem'
-                        }}
-                    >
-                        Logar com google
-                    </Button> */}
                     <Box sx={{ marginTop: '1rem' }}>
-                        <Link href="/cadastro">Crie uma conta</Link>
+                        <Typography
+                            textAlign="center"
+                            variant="body1"
+                            margin="auto 0"
+                            className={styles.firstAccess}
+                        >
+                            <Link
+                                href="/cadastro"
+                            >
+                                Crie sua conta aqui
+                            </Link>
+                        </Typography>
                     </Box>
                 </Box>
             </Box>
