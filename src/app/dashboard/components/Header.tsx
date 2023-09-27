@@ -52,14 +52,10 @@ export default function Header() {
                 }}
                 >
                 <MenuHeader />
-                <Box
-                    sx={{
-                        mr: '10vh',
-                    }}
-                >
+                <Box sx={{ display: "flex", ml: "-17rem" }}>
                     <Image
-                        width={110}
-                        height={105}
+                        width={86}
+                        height={86}
                         src={logo}
                         alt='logo-task'
                     />

@@ -30,7 +30,7 @@ export default function ModalLogout({
     setTimeout(() => {
       router.replace('/login');
       setLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }, 1500);
   };
 
