@@ -34,7 +34,6 @@ export default function Header() {
         minute: "numeric",
         hour12: false,
     });
-
    
     return (
         <>
@@ -47,7 +46,6 @@ export default function Header() {
                     height: "10vh",
                     background: "#FFF",
                     boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-                    // padding: "0 20px",
                     paddingLeft: "20px"
                 }}
                 >

@@ -2,7 +2,6 @@ import { Box, Card, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../public/logo.png"
-import imageFundo from '../../public/fundo-principal.jpg';
 import joao from '../../public/pessoas/joao.png';
 import arthur from '../../public/pessoas/arthur.png';
 import samuel from '../../public/pessoas/samuel.png';

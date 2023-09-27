@@ -1,6 +1,5 @@
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from "react";
 
 import img1 from './../../../../public/bg-fundo.jpg';
 import img2 from './../../../../public/images/img1.png';
@@ -8,22 +7,12 @@ import img3 from './../../../../public/images/img2.png';
 import img4 from './../../../../public/images/img3.png';
 import img5 from './../../../../public/images/img4.png';
 import img6 from './../../../../public/images/img5.png';
-
+import img7 from './../../../../public/images/img6.png';
+import img8 from './../../../../public/fundo-principal.jpg';
+import img9 from './../../../../public/images/img8.jpg';
 import Images from "./Images";
 
 export default function ModalBackground({ isOpen, onClose }: IModalTarefasProps) {
-    const [selectedImage, setSelectedImage] = useState(null)
-
-    const teste = 'img6.png'
-
-    const handleImageSelect = () => {
-        const img = 'img7.png'
-        const imageSrc = `./../../../public/images/${img}`
-        localStorage.setItem("imagemSelecionada", imageSrc);
-
-        console.log(imageSrc)
-
-    };
     return (
         <>
             <Modal
@@ -81,8 +70,6 @@ export default function ModalBackground({ isOpen, onClose }: IModalTarefasProps)
                                 <CloseIcon />
                             </IconButton>
                         </Box>
-
-                            {/* As imagens aqui */}
                         
                         <Box
                             sx={{
@@ -94,16 +81,15 @@ export default function ModalBackground({ isOpen, onClose }: IModalTarefasProps)
                                 margin: '0 auto'
                             }}
                         >
-                            <Box
-                                onClick={handleImageSelect}
-                            >
-                                <Images src={img1} alt="Imagem1" />
-                            </Box>
-                            {/* <Images src={img2} alt="Imagem1" onClick={() => handleImageSelect(img2)} />
-                            <Images src={img3} alt="Imagem1" onClick={() => handleImageSelect(img3)} />
-                            <Images src={img4} alt="Imagem1" onClick={() => handleImageSelect(img4)} />
-                            <Images src={img5} alt="Imagem1" onClick={() => handleImageSelect(img5)} />
-                            <Images src={img6} alt="Imagem1" onClick={() => handleImageSelect(img6)} /> */}
+                            <Images src={img1} alt="Imagem1" />
+                            <Images src={img2} alt="Imagem2" />
+                            <Images src={img3} alt="Imagem3" />
+                            <Images src={img4} alt="Imagem4" />
+                            <Images src={img5} alt="Imagem5" />
+                            <Images src={img6} alt="Imagem6" />
+                            <Images src={img7} alt="Imagem7" />
+                            <Images src={img8} alt="Imagem8" />
+                            <Images src={img9} alt="Imagem9" />
                         </Box>
 
                     </Box>

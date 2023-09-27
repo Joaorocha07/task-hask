@@ -12,7 +12,6 @@ export default function Kanban() {
         const storedTarefas = localStorage.getItem('tarefas')
         if (storedTarefas) {
           setTarefas(JSON.parse(storedTarefas))
-          console.log(storedTarefas)
         }
     
         const intervalId = setInterval(() => {
@@ -38,15 +37,13 @@ export default function Kanban() {
         const tarefasDoUsuario = tarefas.filter((tarefa) => tarefa.userId === usuarioLogado.id);
         const [reorderedItem] = tarefasDoUsuario.splice(result.source.index, 1);
         
-        // Atualize a categoria da tarefa para a nova coluna
         reorderedItem.categoria = result.destination.droppableId;
 
         console.log(reorderedItem)
     
         tarefasDoUsuario.splice(result.destination.index, 0, reorderedItem);
         setTarefas(tarefasDoUsuario);
-    
-        // Atualize o localStorage com as tarefas atualizadas
+
         localStorage.setItem("tarefas", JSON.stringify(tarefas));
       }
     };       

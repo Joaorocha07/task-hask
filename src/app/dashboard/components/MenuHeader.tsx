@@ -6,7 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { Box, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, styled, useMediaQuery, useTheme } from '@mui/material';
 import styles from '../../../styles/page.module.css';
-import { useRouter } from 'next/navigation';
 import ModalLogout from './ModalSair';
 
 const DrawerHeader = styled('div')(({ theme }) => ({

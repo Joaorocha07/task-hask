@@ -27,7 +27,9 @@ export default function LoginLayout({
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center'
         }}
-        className={styles.loginBackground} /><Box
+        className={styles.loginBackground} 
+        />
+        <Box
           sx={{
             margin: '0 auto',
             minHeight: '100vh',
